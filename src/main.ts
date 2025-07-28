@@ -1,13 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { FastifyAdapter } from '@nestjs/platform-fastify';
-import { NestApplicationOptions } from '@nestjs/common';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 import { Providers } from './application/constants/providers';
 
 async function bootstrap() {
-  const app = await NestFactory.create(
+  const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter() as unknown as NestApplicationOptions,
+    new FastifyAdapter(),
   );
 
   const envConfigService = app.get(Providers.ENV_CONFIG_SERVICE);
