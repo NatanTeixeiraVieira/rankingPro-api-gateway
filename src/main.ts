@@ -5,7 +5,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { Providers } from './application/constants/providers';
-import * as momentTimezone from 'moment-timezone';
+import momentTimezone from 'moment-timezone';
 import { AllExceptionFilter } from './infra/exception-filters/http-exception.filter';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 
@@ -19,7 +19,7 @@ async function bootstrap() {
   app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
   app.useGlobalPipes(new ValidationPipe());
 
-  Date.prototype.toJSON = () => {
+  Date.prototype.toJSON = function () {
     return momentTimezone(this)
       .tz('America/Sao_Paulo')
       .format('YYYY-MM-DDTHH:mm:ss.SSS');
