@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Logger, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 import {
   ClientProxy,
   ClientProxyFactory,
@@ -8,15 +8,18 @@ import { EnvConfigService } from 'src/application/env-config-service/env-config.
 import { CreateCategoryDto } from '../dtos/create-category.dto';
 import { Topics } from 'src/application/constants/topics';
 import { Providers } from 'src/application/constants/providers';
+import { LoggerService } from '@/application/logger/logger.service';
 
 @Controller('category')
 export class AppController {
-  private readonly logger = new Logger(AppController.name);
   private readonly clientProxy: ClientProxy;
 
   constructor(
     @Inject(Providers.ENV_CONFIG_SERVICE) envConfigService: EnvConfigService,
+    @Inject(Providers.LOGGER_SERVICE)
+    private readonly logger: LoggerService,
   ) {
+    this.logger.setContext(AppController.name);
     this.clientProxy = ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {

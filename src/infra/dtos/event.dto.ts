@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsInt, Min } from 'class-validator';
+import { IsString, IsNotEmpty, IsInt, Min } from '@/infra/libs/validation';
 
 export class Event {
   @IsString()

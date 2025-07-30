@@ -1,11 +1,12 @@
-import { Type } from 'class-transformer';
 import {
+  Type,
   IsString,
   IsNotEmpty,
   IsArray,
   ArrayMinSize,
   ValidateNested,
-} from 'class-validator';
+} from '@/infra/libs/validation';
+
 import { Event } from './event.dto';
 
 export class UpdateCategoryDto {

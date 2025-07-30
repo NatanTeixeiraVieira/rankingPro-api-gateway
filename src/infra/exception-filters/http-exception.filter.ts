@@ -1,17 +1,24 @@
+import { Providers } from '@/application/constants/providers';
+import { LoggerService } from '@/application/logger/logger.service';
 import {
   ArgumentsHost,
   Catch,
   ExceptionFilter,
   HttpException,
   HttpStatus,
-  Logger,
+  Inject,
 } from '@nestjs/common';
 
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
-  private readonly logger = new Logger(AllExceptionFilter.name);
+  constructor(
+    @Inject(Providers.LOGGER_SERVICE)
+    private readonly logger: LoggerService,
+  ) {}
 
   catch(exception: any, host: ArgumentsHost) {
+    this.logger.setContext(AllExceptionFilter.name);
+
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();

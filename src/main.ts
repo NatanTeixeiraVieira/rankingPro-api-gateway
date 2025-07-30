@@ -14,7 +14,8 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
-  app.useGlobalFilters(new AllExceptionFilter());
+
+  app.useGlobalFilters(app.get(AllExceptionFilter));
   app.setGlobalPrefix('api');
   app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
   app.useGlobalPipes(new ValidationPipe());

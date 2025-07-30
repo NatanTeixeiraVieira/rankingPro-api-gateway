@@ -1,12 +1,12 @@
-import { Type } from 'class-transformer';
+import { Event } from './event.dto';
 import {
   ArrayMinSize,
   IsArray,
   IsNotEmpty,
   IsString,
+  Type,
   ValidateNested,
-} from 'class-validator';
-import { Event } from './event.dto';
+} from '@/infra/libs/validation';
 
 export class CreateCategoryDto {
   @IsString()
