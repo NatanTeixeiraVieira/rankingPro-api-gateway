@@ -5,26 +5,16 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { Providers } from './application/constants/providers';
-import momentTimezone from 'moment-timezone';
-import { AllExceptionFilter } from './infra/exception-filters/http-exception.filter';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { EnvConfigServiceModule } from './infra/env-config-service/env-config.module';
+import { applyGlobalConfigs } from './global-configs';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
+    AppModule.register({ envModule: EnvConfigServiceModule.forRoot() }),
     new FastifyAdapter(),
   );
 
-  app.useGlobalFilters(app.get(AllExceptionFilter));
-  app.setGlobalPrefix('api');
-  app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
-  app.useGlobalPipes(new ValidationPipe());
-
-  Date.prototype.toJSON = function () {
-    return momentTimezone(this)
-      .tz('America/Sao_Paulo')
-      .format('YYYY-MM-DDTHH:mm:ss.SSS');
-  };
+  await applyGlobalConfigs(app);
 
   const envConfigService = app.get(Providers.ENV_CONFIG_SERVICE);
 

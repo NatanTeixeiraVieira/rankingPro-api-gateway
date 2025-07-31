@@ -21,5 +21,5 @@ export class CreateCategoryDto {
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => Event)
-  events: Event[];
+  readonly events: Event[];
 }
