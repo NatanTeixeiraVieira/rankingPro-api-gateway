@@ -7,7 +7,7 @@ import {
   ValidateNested,
 } from '@/infra/libs/validation';
 
-import { Event } from './event.dto';
+import { EventDto } from './event.dto';
 
 export class UpdateCategoryDto {
   @IsString()
@@ -17,6 +17,6 @@ export class UpdateCategoryDto {
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => Event)
-  events: Event[];
+  @Type(() => EventDto)
+  events: EventDto[];
 }

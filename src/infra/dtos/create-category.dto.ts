@@ -1,4 +1,4 @@
-import { Event } from './event.dto';
+import { EventDto } from './event.dto';
 import {
   ArrayMinSize,
   IsArray,
@@ -20,6 +20,6 @@ export class CreateCategoryDto {
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => Event)
-  readonly events: Event[];
+  @Type(() => EventDto)
+  readonly events: EventDto[];
 }

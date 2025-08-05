@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsInt, Min } from '@/infra/libs/validation';
 
-export class Event {
+export class EventDto {
   @IsString()
   @IsNotEmpty()
   readonly name: string;
